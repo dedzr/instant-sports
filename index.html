@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WEB SOCKET LIVE TEST</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                padding: 20px;
+                background-color: #121212;
+                color: #fff;
+            }
+
+            #log {
+                background-color: #000;
+                padding: 10px;
+                height: 300px;
+                overflow-y: scroll;
+                border: 1px solid #333;
+            }
+            .status-on {
+                color: #00ff00;
+            }
+            .status-off {
+                color: #ff0000;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>WebSocket Broadcast Console</h1>
+        <p id="status" class="status-off">Connecting...</p>
+        <form id="message-form">
+            <input id="message-input" placeholder="Send Message" type="text" />
+            <button id="submit-button" type="submit">Deploy Message</button>
+        </form>
+        <h2>Live Stream Logs:</h2>
+        <div id="log"></div>
+    </body>
+
+    <script>
+        const form = document.getElementById("message-form");
+        const status = document.getElementById("status");
+        const log = document.getElementById("log");
+        const messageInput = document.getElementById("message-input");
+
+        const socket = new WebSocket("ws://localhost:8080");
+
+        function addText(text) {
+            const p = document.createElement("p");
+            const time = new Date().toLocaleTimeString();
+            p.innerText = time + ": " + text;
+            log.appendChild(p);
+        }
+
+        socket.addEventListener("open", () => {
+            status.classList.remove("status-off");
+            status.classList.add("status-on");
+            status.innerText = "Connected";
+            addText("Connected to the server");
+        });
+
+        socket.addEventListener("close", () => {
+            status.classList.remove("status-on");
+            status.classList.add("status-off");
+            status.innerText = "Disconnected";
+            addText("Disconnected from the server");
+        });
+        socket.addEventListener("message", (event) => {
+            addText(event.data);
+        });
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            addText("sending message to server...");
+
+            const message = document.getElementById("message-input").value;
+            socket.send(message);
+            messageInput.value = "";
+        });
+    </script>
+</html>
