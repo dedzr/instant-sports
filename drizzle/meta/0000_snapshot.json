@@ -1,5 +1,5 @@
 {
-  "id": "f68b612c-e3b3-4af9-9ae9-32c68488c9d6",
+  "id": "9bce71b3-f9b2-47f2-a9e6-736443335e4d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -76,7 +76,7 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "cal::local_datetime",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
@@ -142,13 +142,13 @@
         },
         "start_time": {
           "name": "start_time",
-          "type": "cal::local_datetime",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
         "end_time": {
           "name": "end_time",
-          "type": "cal::local_datetime",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
@@ -168,7 +168,7 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "cal::local_datetime",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
