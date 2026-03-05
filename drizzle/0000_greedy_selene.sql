@@ -11,7 +11,7 @@ CREATE TABLE "commentary" (
 	"message" text NOT NULL,
 	"metadata" jsonb,
 	"tags" text[],
-	"created_at" "cal::local_datetime" DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "matches" (
@@ -20,11 +20,11 @@ CREATE TABLE "matches" (
 	"home_team" text NOT NULL,
 	"away_team" text NOT NULL,
 	"status" "match_status" DEFAULT 'scheduled' NOT NULL,
-	"start_time" "cal::local_datetime",
-	"end_time" "cal::local_datetime",
+	"start_time" timestamp,
+	"end_time" timestamp,
 	"home_score" integer DEFAULT 0 NOT NULL,
 	"away_score" integer DEFAULT 0 NOT NULL,
-	"created_at" "cal::local_datetime" DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "commentary" ADD CONSTRAINT "commentary_match_id_matches_id_fk" FOREIGN KEY ("match_id") REFERENCES "public"."matches"("id") ON DELETE no action ON UPDATE no action;
